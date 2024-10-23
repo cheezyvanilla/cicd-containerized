@@ -25,8 +25,4 @@ jobs:
       - name: Login to Docker Hub
         run: docker login -u cheezyvanilla -p ${{ secrets.DOCKER_HUB_PASSWORD }}
       - name: Push Docker image to Docker Hub
-        uses: actions/docker/push@v2
-        with:
-          hub: cheezyvanilla
-          repo: ${{ github.repository }}
-          tags: ${{ github.sha }}
+        run: docker push ${{ github.repository }}:${{ github.sha }}

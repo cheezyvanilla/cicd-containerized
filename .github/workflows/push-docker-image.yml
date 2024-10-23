@@ -16,9 +16,17 @@ jobs:
     - uses: actions/checkout@v4
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag ${{ github.repository }}:${{ github.sha }}
-    - name: Push Docker image to Docker Hub
-      uses: actions/docker/push@v2
-      with:
-              hub: cheezyvanilla
-              repo: ${{ github.repository }}
-              tags: ${{ github.sha }}
+  
+  push:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Login to Docker Hub
+        run: docker login -u cheezyvanilla -p ${{ secrets.DOCKER_HUB_PASSWORD }}
+      - name: Push Docker image to Docker Hub
+        uses: actions/docker/push@v2
+        with:
+          hub: cheezyvanilla
+          repo: ${{ github.repository }}
+          tags: ${{ github.sha }}

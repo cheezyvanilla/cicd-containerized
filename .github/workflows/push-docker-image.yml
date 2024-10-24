@@ -41,7 +41,7 @@ jobs:
           args:  >
             **Docker Image CI**
 
-            **Build and Push Status:** ${{ jobs.build-and-push.status }}
+            **Build and Push Status:** ${{ jobs.build-and-push.result }}
 
 
 

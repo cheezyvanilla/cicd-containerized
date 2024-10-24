@@ -5,22 +5,13 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  build-push:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
     - name: Build the Docker image
       run: docker build . --file Dockerfile -t ${{ github.repository }} --tag ${{ github.repository }}:${{ github.sha }}
-
-  
-  push:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Inspect the Docker image
-        run: docker image ls
-      - name: Login to Docker Hub
-        run: docker login -u ${{ vars.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER_HUB_PASSWORD }}
-      - name: Push Docker image to Docker Hub
-        run: docker push ${{ github.repository }}:${{ github.sha }}
+    - name: Login to Docker Hub
+      run: docker login -u ${{ vars.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER_HUB_PASSWORD }}
+    - name: Push Docker image to Docker Hub
+      run: docker push ${{ github.repository }}:${{ github.sha }}

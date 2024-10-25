@@ -32,7 +32,9 @@ jobs:
       - 
         name: Generate output
         id: output
-        run: echo "status=${{ job.status }}" >> "$GITHUB_OUTPUT"
+        run: |
+          echo "status=${{ job.status }}" >> "$GITHUB_OUTPUT"
+          echo "status=${{ job.status }}"
   notif-discord:
       needs: build-and-push
       runs-on: ubuntu-latest

@@ -29,12 +29,11 @@ jobs:
         with:
           push: true
           tags: ${{ github.repository }}:${{ github.sha }}
-          post:
-              echo "build_status=${{ job.status }}" >> $GITHUB_OUTPUT
 
   notif-discord:
       needs: build-and-push
       runs-on: ubuntu-latest
+      if: ${{ always() }}
       steps:
       - uses: actions/checkout@master
       - name: send discord notification
@@ -45,7 +44,7 @@ jobs:
           args:  >
             **Docker Image CI**
 
-            **Build and Push Status:** ${{ needs.build-and-push.outputs.build_status }}
+            **${{ github.workflow }}: {{STATUS}}
 
 
 

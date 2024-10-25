@@ -42,6 +42,10 @@ jobs:
       if: ${{ always() }}
       steps:
       - uses: actions/checkout@master
+      - name: get status
+        id: status
+        run: |
+          if [[ ${{ needs.build-and-push.result }} != "success" ]]; then echo "reason=details\n https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}" >> $GITHUB_OUTPUT
       - name: send discord notification
         uses: appleboy/discord-action@master
         with:
@@ -51,8 +55,7 @@ jobs:
             **Docker Image CI**
 
             ${{ github.workflow }}: ** ${{needs.build-and-push.result}} **
-            ${{ if [[ needs.build-and-push.result != 'success' ]]; then'check reason: https://github.com/' + github.repository + '/actions/runs/' + github.run_id }}
-
+            ${{ steps.status.outputs.reason }}
 
 # name: Push Docker Image 2
 

@@ -29,7 +29,9 @@ jobs:
         with:
           push: true
           tags: ${{ github.repository }}:${{ github.sha }}
-        run: echo "build_status=${{ job.status }}" >> $GITHUB_OUTPUT
+        post:
+          - name: Set build status output
+            run: echo "build_status=${{ job.status }}" >> $GITHUB_OUTPUT
 
   notif-discord:
       needs: build-and-push

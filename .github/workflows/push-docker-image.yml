@@ -45,7 +45,7 @@ jobs:
       - name: get status
         id: status
         run: |
-          if [[ ${{ needs.build-and-push.result }} != "success" ]]; then echo ", check reason on https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}" >> $GITHUB_OUTPUT; fi
+          if [[ ${{ needs.build-and-push.result }} != "success" ]]; then echo "reason=check reason on https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}" >> $GITHUB_OUTPUT; fi
       - name: send discord notification
         uses: appleboy/discord-action@master
         with:

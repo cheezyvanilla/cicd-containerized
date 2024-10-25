@@ -11,7 +11,8 @@ jobs:
   build-and-push:
 
     runs-on: ubuntu-latest
-
+    outputs:
+      status: ${{ steps.output.outputs.status }}
     steps:
       -
         name: Login to Docker Hub

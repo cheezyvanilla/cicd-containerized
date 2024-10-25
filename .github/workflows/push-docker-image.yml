@@ -44,7 +44,7 @@ jobs:
           args:  >
             **Docker Image CI**
 
-            **${{ github.workflow }}: {{STATUS}}
+            ** ${{ github.workflow }}: ${{STATUS}}
 
 
 

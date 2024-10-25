@@ -24,10 +24,12 @@ jobs:
         uses: docker/setup-buildx-action@v3
       -
         name: Build and push
+        id: build-and-push
         uses: docker/build-push-action@v6
         with:
           push: true
           tags: ${{ github.repository }}:${{ github.sha }}
+        run: echo "build_status=${{ job.status }}" >> $GITHUB_OUTPUT
 
   notif-discord:
       needs: build-and-push
@@ -42,7 +44,7 @@ jobs:
           args:  >
             **Docker Image CI**
 
-            **Build and Push Status:** ${{ github.event.status }}
+            **Build and Push Status:** ${{ needs.build-and-push.outputs.build_status }}
 
 
 

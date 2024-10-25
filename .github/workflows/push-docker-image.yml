@@ -49,7 +49,7 @@ jobs:
           args:  >
             **Docker Image CI**
 
-            ${{ github.workflow }}: ** ${{needs.build-and-push.outputs.status}} **
+            ${{ github.workflow }}: ** ${{jobs.build-and-push.outputs.status}} **
 
 
 

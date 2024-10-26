@@ -52,7 +52,7 @@ jobs:
           webhook_id: ${{ secrets.DISCORD_WEBHOOK_ID }}
           webhook_token: ${{ secrets.DISCORD_WEBHOOK_TOKEN }}
           args:  >
-            >>>**Github Action Notification**
+            >>> **Github Action Notification**
 
             **Status**
 

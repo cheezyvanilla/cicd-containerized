@@ -20,16 +20,16 @@ jobs:
         with:
           username: ${{ vars.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
-      -
-        name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-      -
-        name: Build and push
-        id: build-and-push
-        uses: docker/build-push-action@v6
-        with:
-          push: true
-          tags: ${{ github.repository }}:${{ github.sha }}
+      # -
+      #   name: Set up Docker Buildx
+      #   uses: docker/setup-buildx-action@v3
+      # -
+      #   name: Build and push
+      #   id: build-and-push
+      #   uses: docker/build-push-action@v6
+      #   with:
+      #     push: true
+      #     tags: ${{ github.repository }}:${{ github.sha }}
       - 
         name: Generate output
         id: output
@@ -52,12 +52,28 @@ jobs:
           webhook_id: ${{ secrets.DISCORD_WEBHOOK_ID }}
           webhook_token: ${{ secrets.DISCORD_WEBHOOK_TOKEN }}
           args:  >
-            **Docker Image CI**
+            >>>**Github Action Notification**
 
-            ${{ github.workflow }}: ** ${{needs.build-and-push.result}} **
+            **Status**
 
+            ${{needs.build-and-push.result}}
             ${{ steps.status.outputs.reason }}
 
+            **Repository**
+
+            ${{ github.repository }}
+
+            **Branch**
+
+            ${{ github.ref }}
+
+            **commit**
+
+            ${{ github.sha }}
+
+            **Triggered By**
+
+            ${{ github.actor }}
 # name: Push Docker Image 2
 
 # on:
